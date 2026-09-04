@@ -3,13 +3,32 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.database import Base, engine
+from app.database import Base, engine, SessionLocal
+from app.models import User
 from app.routers import auth, tenders, bids, documents, findings, verification_center, dashboard
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("gem-compliance")
 
 Base.metadata.create_all(bind=engine)
+
+
+def _seed_if_empty():
+    """Populate demo data on first boot (empty DB) — covers fresh deploys where
+    nobody ran `python -m app.seed` manually, e.g. Render/Railway/Docker."""
+    db = SessionLocal()
+    try:
+        has_users = db.query(User).first() is not None
+    finally:
+        db.close()
+    if not has_users:
+        logger.info("Database is empty — running demo seed...")
+        from app.seed import seed
+        seed()
+        logger.info("Demo seed complete.")
+
+
+_seed_if_empty()
 
 app = FastAPI(
     title="AI-Powered Integrated Bid Compliance Verification Platform",
