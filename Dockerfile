@@ -34,10 +34,10 @@ COPY --from=backend-builder /usr/local/bin /usr/local/bin
 # Copy backend
 COPY --from=backend-builder /app/backend /app/backend
 
-# Copy frontend build
+# Copy frontend build and dependencies
+COPY frontend/package*.json /app/frontend/
 COPY --from=frontend-builder /app/frontend/.next /app/frontend/.next
 COPY --from=frontend-builder /app/frontend/public /app/frontend/public
-COPY frontend/package*.json /app/frontend/
 RUN cd /app/frontend && npm ci --production
 
 EXPOSE 3000 8000
