@@ -48,50 +48,38 @@ Three pre-seeded bidders per tender demonstrate the three demo profiles:
 - **Coastal Industrial Suppliers LLP** — MEDIUM risk (borderline turnover/local-content, turnover inconsistency)
 - **Sunrise Traders Private Limited** — HIGH risk / problematic (expired GST, PAN mismatch, missing OEM authorization, active debarment listing, turnover inconsistency)
 
-## Deploy on Railway (free, auto-updating from GitHub)
+## Deploy (single service, free tier, auto-deploy from GitHub)
 
-Railway is a free-tier hosting platform supporting both Node.js and Python with automatic PostgreSQL database.
+The app ships as **one Docker image** containing both the Next.js frontend and the FastAPI backend.
+The frontend is the only publicly routed process — it proxies `/api/*` requests server-side to the
+backend, which listens on an internal port inside the same container. This means the whole platform
+runs as a single web service, which fits the free tier of Render, Railway, or any host that builds
+from a `Dockerfile` and forwards `$PORT`.
 
-### Step-by-step
+### Render (what this project is currently deployed on)
 
-1. **Fork or push this repo** to your GitHub account.
+1. **[render.com](https://render.com)** → New → Web Service → connect the `taqi-ai/SIH-Project` GitHub repo.
+2. **Runtime**: Docker (Render auto-detects the root `Dockerfile`) — leave **Start Command** blank so
+   Render uses the Dockerfile's `CMD`.
+3. **Environment variables**:
+   ```
+   SECRET_KEY=your-production-secret-key
+   AI_PROVIDER=local
+   DATABASE_URL=<leave unset to use SQLite, or add a Render PostgreSQL instance's connection string>
+   ```
+4. **Add a PostgreSQL database** (optional, free tier available): Render → New → PostgreSQL → copy the
+   Internal Database URL into `DATABASE_URL` above.
+5. **Deploy**. Every push to `main` auto-builds and redeploys.
 
-2. **Go to [railway.app](https://railway.app)** → Sign in with GitHub → New Project → Deploy from GitHub repo → select `taqi-ai/SIH-Project` (or your fork).
+### Railway (alternative, same Dockerfile)
 
-3. **Railway auto-detects** Next.js (frontend) and creates two services. **Add a third:**
-   - Click **"+ Add Service"** → select **PostgreSQL**
-   - Railway will auto-provision a database and set `DATABASE_URL` environment variable.
+1. **[railway.app](https://railway.app)** → New Project → Deploy from GitHub repo → select the repo.
+2. Railway auto-detects `railway.json` (`builder: dockerfile`) — no start command override needed.
+3. Add the same environment variables as above (`SECRET_KEY`, `AI_PROVIDER`, optional `DATABASE_URL`
+   from an added PostgreSQL plugin).
+4. Deploy. Push to `main` → Railway auto-rebuilds.
 
-4. **Configure the backend service**:
-   - Click the backend service tile
-   - Settings → Build → **Builder**: `Dockerfile`
-   - Settings → Variables → add:
-     ```
-     SECRET_KEY=your-production-secret-key
-     DATABASE_URL=<auto-filled by Railway>
-     AI_PROVIDER=local
-     ```
-
-5. **Configure the frontend service**:
-   - Click the frontend service tile
-   - No changes needed — Railway auto-detects Next.js and builds it.
-   - Add environment variable:
-     ```
-     NEXT_PUBLIC_API_BASE=https://your-backend-url.railway.app
-     ```
-   - (Railway assigns a URL to each service automatically)
-
-6. **Deploy**: Push any commit to `main` branch → Railway auto-builds and deploys both services.
-
-### What Railway provides free
-
-- 500 hours of compute per month (runs 24/7 if needed)
-- Unlimited deployments from GitHub
-- PostgreSQL database (5GB)
-- Custom domains (paid, or use railway's `.railway.app` subdomain)
-- Auto-HTTPS
-
-**That's it.** Push to main, Railway redeploys. No credit card required for the free tier.
+**That's it.** No `NEXT_PUBLIC_API_BASE` to configure — the frontend and backend share one origin.
 
 ---
 

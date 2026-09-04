@@ -1,46 +1,46 @@
-# Multi-stage build for Railway deployment
-# Backend: FastAPI
-FROM python:3.12-slim as backend-builder
+# Single-container deploy for Render/Railway: Next.js frontend (public port)
+# proxies /api/* to a FastAPI backend running on an internal port.
+# Uses one consistent Debian base throughout to avoid glibc/musl ABI mismatches
+# between pip-installed native wheels (psycopg2, etc.) and the runtime image.
 
-WORKDIR /app/backend
-
-COPY backend/requirements-prod.txt .
-RUN pip install --no-cache-dir -r requirements-prod.txt
-
-COPY backend/ .
-
-# Frontend: Next.js
-FROM node:22-alpine as frontend-builder
+# Stage 1: build the Next.js frontend
+FROM node:22-bookworm-slim AS frontend-builder
 
 WORKDIR /app/frontend
 
-COPY frontend/package*.json .
+COPY frontend/package*.json ./
 RUN npm ci
 
 COPY frontend/ .
+
+# Baked in at build time: browser calls same-origin /api/*, proxied by next.config.mjs
+ENV NEXT_PUBLIC_API_BASE=/api
 RUN npm run build
 
-# Production runtime: Node + Python
-FROM node:22-alpine
+# Stage 2: production runtime (Node + Python, same Debian base as builder)
+FROM node:22-bookworm-slim
 
-RUN apk add --no-cache python3 py3-pip
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 python3-pip python3-venv && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy Python runtime from builder
-COPY --from=backend-builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=backend-builder /usr/local/bin /usr/local/bin
+# Backend: install deps into a venv using this image's own Python (no cross-image copy)
+COPY backend/requirements-prod.txt /app/backend/requirements-prod.txt
+RUN python3 -m venv /app/backend/venv && \
+    /app/backend/venv/bin/pip install --no-cache-dir -r /app/backend/requirements-prod.txt
+COPY backend/ /app/backend/
 
-# Copy backend
-COPY --from=backend-builder /app/backend /app/backend
-
-# Copy frontend build and dependencies
+# Frontend: runtime deps + built output
 COPY frontend/package*.json /app/frontend/
 COPY --from=frontend-builder /app/frontend/.next /app/frontend/.next
 COPY --from=frontend-builder /app/frontend/public /app/frontend/public
-RUN cd /app/frontend && npm ci --production
+RUN cd /app/frontend && npm ci --omit=dev
 
-EXPOSE 3000 8000
+# Frontend is the only publicly routed port (Render/Railway inject $PORT).
+# Backend listens on a fixed internal port that Next.js rewrites proxy to.
+ENV BACKEND_PORT=8000
+EXPOSE 3000
 
-# Start both services
-CMD ["sh", "-c", "cd /app/frontend && npm start & cd /app/backend && gunicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"]
+CMD ["sh", "-c", "cd /app/backend && ./venv/bin/uvicorn app.main:app --host 127.0.0.1 --port ${BACKEND_PORT} & cd /app/frontend && npm start -- -p ${PORT:-3000}"]
