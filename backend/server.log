@@ -1,0 +1,121 @@
+INFO:     Started server process [15272]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54469 - "GET /health HTTP/1.1" 200 OK
+2026-09-03 15:34:34,005 [WARNING] (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "D:\SIH Project\backend\venv\Lib\site-packages\passlib\handlers\bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     127.0.0.1:54470 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54473 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54474 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54475 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54476 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54477 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54478 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54479 - "GET /tenders/TDR-6D12A91245 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54480 - "GET /bids/BID-232611E460/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54481 - "GET /bids/BID-232611E460/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54498 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54499 - "GET /bids/BID-232611E460/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54500 - "POST /findings/FND-3237BA9BC2/override HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:54501 - "POST /findings/FND-3237BA9BC2/override HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54502 - "POST /bids/BID-232611E460/final-decision HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54503 - "GET /bids/BID-232611E460/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54505 - "GET /bids/BID-232611E460/report HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56792 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56792 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56792 - "OPTIONS /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "OPTIONS /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56792 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63129 - "OPTIONS /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56593 - "OPTIONS /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56593 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63129 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "OPTIONS /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "OPTIONS /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53179 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "OPTIONS /tenders/TDR-FEF01D63D0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53179 - "OPTIONS /tenders/TDR-FEF01D63D0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53179 - "GET /tenders/TDR-FEF01D63D0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /tenders/TDR-FEF01D63D0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "OPTIONS /bids/BID-AEBA74D8D8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "OPTIONS /bids/BID-AEBA74D8D8/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59656 - "OPTIONS /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "OPTIONS /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50550 - "OPTIONS /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "OPTIONS /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55123 - "OPTIONS /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+2026-09-03 15:46:40,682 [ERROR] Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Users\mohdt\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Users\mohdt\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+INFO:     127.0.0.1:61015 - "OPTIONS /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "GET /bids/BID-AEBA74D8D8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50747 - "GET /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "GET /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59656 - "GET /bids/BID-AEBA74D8D8/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61015 - "GET /bids/BID-AEBA74D8D8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55237 - "GET /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "GET /bids/BID-AEBA74D8D8/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55123 - "GET /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61015 - "GET /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "GET /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63470 - "OPTIONS /documents/DOC-EC6249984B/file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51737 - "OPTIONS /documents/DOC-EC6249984B/file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63470 - "GET /documents/DOC-EC6249984B/file HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58639 - "OPTIONS /findings/FND-6F0C17BC8D/review HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58639 - "POST /findings/FND-6F0C17BC8D/review HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54464 - "GET /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58639 - "GET /bids/BID-AEBA74D8D8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57820 - "GET /bids/BID-AEBA74D8D8/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51445 - "GET /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50744 - "GET /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59200 - "OPTIONS /bids/BID-AEBA74D8D8/final-decision HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59200 - "POST /bids/BID-AEBA74D8D8/final-decision HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57188 - "GET /bids/BID-AEBA74D8D8/findings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59200 - "GET /bids/BID-AEBA74D8D8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63127 - "GET /bids/BID-AEBA74D8D8/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64111 - "GET /bids/BID-AEBA74D8D8/compliance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58587 - "GET /bids/BID-AEBA74D8D8/audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50883 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54897 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54897 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50883 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53639 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57448 - "GET /auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57448 - "OPTIONS /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53639 - "OPTIONS /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53639 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57448 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54173 - "OPTIONS /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54173 - "POST /auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54173 - "OPTIONS /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49252 - "OPTIONS /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49252 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54173 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "OPTIONS /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "OPTIONS /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "OPTIONS /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "OPTIONS /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "GET /dashboard/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /tenders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /verification-center/connectors HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49667 - "GET /verification-center/connectors HTTP/1.1" 200 OK

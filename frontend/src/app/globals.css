@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f4f6f8;
+  --foreground: #131c2b;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase;
+  }
+  .badge-verified { @apply bg-status-verifiedBg text-status-verified; }
+  .badge-warning { @apply bg-status-warningBg text-status-warning; }
+  .badge-failed { @apply bg-status-failedBg text-status-failed; }
+  .badge-pending { @apply bg-status-pendingBg text-status-pending; }
+  .badge-na { @apply bg-status-naBg text-status-na; }
+
+  .risk-low { @apply bg-status-verifiedBg text-status-verified; }
+  .risk-medium { @apply bg-status-warningBg text-status-warning; }
+  .risk-high { @apply bg-status-failedBg text-status-failed; }
+
+  .panel {
+    @apply bg-white border border-slate-200 rounded-md shadow-card;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md px-3.5 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-primary { @apply btn bg-ink-900 text-white hover:bg-ink-800; }
+  .btn-secondary { @apply btn bg-white border border-slate-300 text-ink-900 hover:bg-slate-50; }
+  .btn-danger { @apply btn bg-status-failed text-white hover:opacity-90; }
+  .btn-ghost { @apply btn text-ink-700 hover:bg-slate-100; }
+
+  .input {
+    @apply w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-ink-600 focus:ring-1 focus:ring-ink-600;
+  }
+  .label-sm {
+    @apply text-[11px] font-semibold uppercase tracking-wide text-slate-500;
+  }
+}
