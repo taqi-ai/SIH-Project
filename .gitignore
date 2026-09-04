@@ -10,3 +10,8 @@ frontend/.env.local
 *.pyc
 frontend/dev.log
 backend/server.log
+.env
+.env.local
+.env.prod
+.env.prod.local
+.DS_Store
