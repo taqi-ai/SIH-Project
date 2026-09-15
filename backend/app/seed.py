@@ -232,6 +232,28 @@ def seed():
             years=2, incorporation_year=2023,
             company_variant="Sunrise Traders Pvt. Ltd.",  # name mismatch across documents
         ),
+        # ---- MEDIUM RISK (ESIC lapse) ----
+        lambda t: dict(
+            profile="MEDIUM", company="Apex Engineering Works Private Limited",
+            pan="AAKFA6203R", gstin="33AAKFA6203R1Z8",
+            udyam="UDYAM-TN-05-0062910", enterprise_type="Medium",
+            gst_valid=(t.closing_date + timedelta(days=180)).strftime("%d/%m/%Y"),
+            itr_turnover=f"{int(t.min_turnover*1.15):,}", audited_turnover=f"{int(t.min_turnover*1.10):,}",
+            local_content=t.min_local_content_pct + 8, epfo="Active", esic="Inactive",  # lapsed ESIC registration
+            oem="Kirloskar Brothers Limited" if t.requires_oem_authorization else None,
+            years=6, incorporation_year=2019,
+        ),
+        # ---- HIGH RISK (financially weak, not fraudulent) ----
+        lambda t: dict(
+            profile="PROBLEMATIC", company="Global Tech Fabricators LLP",
+            pan="AALFG8845N", gstin="33AALFG8845N1Z4",
+            udyam="UDYAM-TN-09-0083647", enterprise_type="Small",
+            gst_valid=(t.closing_date + timedelta(days=200)).strftime("%d/%m/%Y"),
+            itr_turnover=f"{int(t.min_turnover*0.61):,}", audited_turnover=f"{int(t.min_turnover*0.58):,}",  # below threshold
+            local_content=max(5, t.min_local_content_pct - 12), epfo="Active", esic="Active",
+            oem=None,  # missing mandatory OEM authorization
+            years=3, incorporation_year=2022,
+        ),
     ]
 
     for t in tenders:
