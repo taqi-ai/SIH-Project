@@ -161,6 +161,18 @@ def seed():
             description="Design, supply, installation, testing and commissioning of fire hydrant and foam suppression systems.",
             min_turnover=30000000, min_years_operation=5, min_local_content_pct=60, requires_oem_authorization=False,
         ),
+        dict(
+            tender_number="CPCL/GEM/2026/INST/052", title="Supply of DCS Field Instrumentation & Control Systems",
+            category="Goods", estimated_value=41000000, closing_days=22,
+            description="Procurement of pressure/flow/level transmitters, control valves and DCS integration hardware for the Hydrocracker Unit upgrade.",
+            min_turnover=35000000, min_years_operation=4, min_local_content_pct=45, requires_oem_authorization=True,
+        ),
+        dict(
+            tender_number="CPCL/GEM/2026/CIVIL/061", title="Rate Contract for Structural Steel & Piping Materials",
+            category="Goods", estimated_value=19500000, closing_days=15,
+            description="Annual rate contract for structural steel sections, corrosion-resistant piping and fittings for refinery maintenance works.",
+            min_turnover=15000000, min_years_operation=3, min_local_content_pct=55, requires_oem_authorization=False,
+        ),
     ]
 
     tenders = []

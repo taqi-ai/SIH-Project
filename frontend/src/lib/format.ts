@@ -21,3 +21,9 @@ export function formatPct(value: number | null | undefined): string {
 export function docTypeLabel(code: string): string {
   return code.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
+
+export function daysUntil(value: string | null | undefined): number | null {
+  if (!value) return null;
+  const ms = new Date(value).getTime() - Date.now();
+  return Math.ceil(ms / (1000 * 60 * 60 * 24));
+}
