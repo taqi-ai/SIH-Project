@@ -38,9 +38,14 @@ COPY --from=frontend-builder /app/frontend/.next /app/frontend/.next
 COPY --from=frontend-builder /app/frontend/public /app/frontend/public
 RUN cd /app/frontend && npm ci --omit=dev
 
-# Frontend is the only publicly routed port (Render/Railway inject $PORT).
-# Backend listens on a fixed internal port that Next.js rewrites proxy to.
-ENV BACKEND_PORT=8000
+# Frontend is the only publicly routed port - Render/Railway inject $PORT for
+# it, and that value varies per service (whatever the host assigned, often the
+# same port an earlier iteration of this service used for something else).
+# The backend's internal port must NOT be a value $PORT could ever collide
+# with, or the frontend (the container's foreground/main process) fails to
+# bind and the whole container crash-loops. 8811 is deliberately unlikely to
+# ever be assigned as a public $PORT.
+ENV BACKEND_PORT=8811
 EXPOSE 3000
 
 CMD ["sh", "-c", "cd /app/backend && ./venv/bin/uvicorn app.main:app --host 127.0.0.1 --port ${BACKEND_PORT} & cd /app/frontend && npm start -- -p ${PORT:-3000}"]
