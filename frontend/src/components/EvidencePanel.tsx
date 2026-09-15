@@ -7,8 +7,19 @@ export interface EvidenceChainStep {
   value: string;
 }
 
+const VERDICT_STYLE: Record<string, { bg: string; text: string; icon: string; heading: string }> = {
+  VERIFIED: { bg: "bg-status-verifiedBg", text: "text-status-verified", icon: "✓", heading: "Verified — meets requirement" },
+  WARNING: { bg: "bg-status-warningBg", text: "text-status-warning", icon: "!", heading: "Warning — needs officer attention" },
+  FAILED: { bg: "bg-status-failedBg", text: "text-status-failed", icon: "✕", heading: "Failed — does not meet requirement" },
+  NOT_APPLICABLE: { bg: "bg-status-naBg", text: "text-status-na", icon: "–", heading: "Not applicable to this tender" },
+  LOW: { bg: "bg-status-pendingBg", text: "text-status-pending", icon: "i", heading: "Low-severity AI finding — informational" },
+  MEDIUM: { bg: "bg-status-warningBg", text: "text-status-warning", icon: "!", heading: "Medium-severity AI finding — review recommended" },
+  HIGH: { bg: "bg-status-failedBg", text: "text-status-failed", icon: "!", heading: "High-severity AI finding — officer review required" },
+  CRITICAL: { bg: "bg-status-failedBg", text: "text-status-failed", icon: "✕", heading: "Critical AI finding — officer review required" },
+};
+
 export function EvidencePanel({
-  open, onClose, title, chain, documentId, page, comparedDocumentId, comparedPage,
+  open, onClose, title, chain, documentId, page, comparedDocumentId, comparedPage, verdict,
 }: {
   open: boolean;
   onClose: () => void;
@@ -18,12 +29,14 @@ export function EvidencePanel({
   page?: number | null;
   comparedDocumentId?: string | null;
   comparedPage?: number | null;
+  verdict?: string | null;
 }) {
   const [showCompared, setShowCompared] = useState(false);
   if (!open) return null;
 
   const activeDoc = showCompared ? comparedDocumentId : documentId;
   const activePage = showCompared ? comparedPage : page;
+  const v = verdict ? VERDICT_STYLE[verdict] : null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/30">
@@ -33,6 +46,12 @@ export function EvidencePanel({
             <h3 className="text-sm font-semibold text-ink-900">Evidence</h3>
             <button onClick={onClose} className="text-slate-400 hover:text-slate-700 text-lg leading-none">×</button>
           </div>
+          {v && (
+            <div className={`px-5 py-3.5 flex items-center gap-3 ${v.bg}`}>
+              <span className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shrink-0 bg-white/70 ${v.text}`}>{v.icon}</span>
+              <span className={`text-sm font-semibold ${v.text}`}>{v.heading}</span>
+            </div>
+          )}
           <div className="px-5 py-4 overflow-y-auto flex-1">
             <div className="text-sm font-medium text-ink-900 mb-3">{title}</div>
             <ol className="space-y-3">

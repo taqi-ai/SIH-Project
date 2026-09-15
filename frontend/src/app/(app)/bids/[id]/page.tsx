@@ -337,6 +337,7 @@ function ComplianceMatrixTab({ evaluations, onChanged }: { evaluations: Complian
           title={evidence.requirement.label}
           documentId={evidence.evidence_document_id}
           chain={buildRuleChain(evidence)}
+          verdict={evidence.status}
         />
       )}
       {reviewing && (
@@ -363,7 +364,6 @@ function buildRuleChain(e: ComplianceEvaluation): EvidenceChainStep[] {
   if (trace.compare_to !== undefined) steps.push({ label: "Compared To", value: String(trace.compare_to) });
   if (trace.value_a !== undefined) steps.push({ label: "Value A", value: String(trace.value_a) });
   if (trace.value_b !== undefined) steps.push({ label: "Value B", value: String(trace.value_b) });
-  steps.push({ label: "Verification Result", value: e.status });
   return steps;
 }
 
@@ -418,6 +418,7 @@ function FindingsTab({ findings, onChanged }: { findings: Finding[]; onChanged: 
             { label: "Observation", value: evidence.description },
             { label: "AI Confidence", value: `${(evidence.confidence * 100).toFixed(0)}%` },
           ]}
+          verdict={evidence.severity}
         />
       )}
       {reviewing && (
